@@ -1,4 +1,4 @@
-#include "YParameters.h"
+﻿#include "YParameters.h"
 #include <QVariant>
 #include <QPair>
 
@@ -58,7 +58,6 @@ QDomElement YIntParameter::toDom(QDomDocument &doc)
     param.appendChild(eleRange);
     eleRange.appendChild(txtRange);
 
-    printParam(param);
     return param;
 }
 
@@ -142,4 +141,103 @@ bool YEnumParameter::fromDom(QDomElement &dom)
 
     }
     return ret;
+}
+
+/********************当地地区类型***********************
+ * YLocaleParameter
+ * 描述：地区类型参数类型
+ *
+ */
+QDomElement YLocaleParameter::toDom(QDomDocument &doc)
+{
+    auto param = YParamBase::toDom(doc);
+    QString txt = vParamValue.toLocale().name();
+    param.setAttribute("Value", txt);
+
+    QDomNode ele = param.firstChildElement("Default");
+    if (!ele.isNull()) {
+        param.removeChild(ele);
+    }
+
+    QDomElement element = doc.createElement("Default");
+    QString text = vParamDefault.toLocale().name();
+    QDomText txtDom = doc.createTextNode(text);
+    param.appendChild(element);
+    element.appendChild(txtDom);
+
+    return param;
+}
+
+bool YLocaleParameter::fromDom(QDomElement &dom)
+{
+    auto ret = YParamBase::fromDom(dom);
+
+    QString value = dom.attribute("Value");
+
+    vParamValue = QVariant(QLocale(value));
+
+    QDomElement ele = dom.firstChildElement("Default");
+    if (!ele.isNull()) {
+        QString text = ele.text();
+        vParamDefault = QVariant(QLocale(text));
+    } else {
+
+    }
+    return ret;
+}
+
+/********************点类型***********************
+ * YPointParameter
+ * 描述：点类型参数类型
+ *
+ */
+QDomElement YPointParameter::toDom(QDomDocument &doc)
+{
+    auto param = YParamBase::toDom(doc);
+    QPoint value = vParamValue.toPoint();
+    qDebug() << value;
+    param.setAttribute("Value", QString("(%1,%2)").arg(value.x()).arg(value.y()));
+
+    QDomNode ele = param.firstChildElement("Default");
+    if (!ele.isNull()) {
+        param.removeChild(ele);
+    }
+
+    QDomElement element = doc.createElement("Default");
+    auto def = vParamDefault.toPoint();
+    QDomText txtDom = doc.createTextNode(QString("(%1,%2)").arg(def.x()).arg(def.y()));
+    param.appendChild(element);
+    element.appendChild(txtDom);
+
+    return param;
+}
+
+bool YPointParameter::fromDom(QDomElement &dom)
+{
+    auto ret = YParamBase::fromDom(dom);
+
+    int x,y;
+    QString value = dom.attribute("Value");
+    sscanf(value.toStdString().c_str(), "(%d,%d)", &x, &y);
+    vParamValue = QVariant(QPoint(x,y));
+
+    int x1,y1;
+    QDomElement ele = dom.firstChildElement("Default");
+    if (!ele.isNull()) {
+        QString def = ele.text();
+        sscanf(def.toStdString().c_str(), "(%d,%d)", &x1, &y1);
+        vParamDefault = QVariant(QPoint(x1,y1));
+    } else {
+
+    }
+    return ret;
+}
+
+void YPointParameter::setVParamValue(const QVariant &newVParamValue, const QtProperty *property)
+{
+    auto value = property->valueText();
+    if (value.isEmpty()) return;
+    int x,y;
+    sscanf(value.toStdString().c_str(), "(%d,%d)", &x, &y);
+    vParamValue = QVariant(QPoint(x,y));
 }

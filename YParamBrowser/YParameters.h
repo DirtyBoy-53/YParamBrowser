@@ -156,6 +156,93 @@ public:
         const QString&                  remark  = "Notes"
         ) : YParamBase(type, value, defvalue, range, name, tip, remark){ }
 };
+
+// Time parameter
+class YTimeParameter : public YParamBase{
+public:
+    YTimeParameter() = delete;
+    YTimeParameter(
+        const YParamEnum::ParamType&    type    = YParamEnum::ParamType_Time,
+        const QVariant&                 value   = QVariant(),
+        const QVariant&                 defvalue= QVariant(),
+        const QVariant&                 range   = QVariant(),
+        const QString&                  name    = "name",
+        const QString&                  tip     = "tips",
+        const QString&                  remark  = "Notes"
+        ) : YParamBase(type, value, defvalue, range, name, tip, remark){ }
+};
+
+// DateTime parameter
+class YDateTimeParameter : public YParamBase{
+public:
+    YDateTimeParameter() = delete;
+    YDateTimeParameter(
+        const YParamEnum::ParamType&    type    = YParamEnum::ParamType_DateTime,
+        const QVariant&                 value   = QVariant(),
+        const QVariant&                 defvalue= QVariant(),
+        const QVariant&                 range   = QVariant(),
+        const QString&                  name    = "name",
+        const QString&                  tip     = "tips",
+        const QString&                  remark  = "Notes"
+        ) : YParamBase(type, value, defvalue, range, name, tip, remark){ }
+};
+
+// KeySeq parameter
+class YKeySeqParameter : public YParamBase{
+public:
+    YKeySeqParameter() = delete;
+    YKeySeqParameter(
+            const YParamEnum::ParamType&    type    = YParamEnum::ParamType_KeySeq,
+            const QVariant&                 value   = QVariant(),
+            const QVariant&                 defvalue= QVariant(),
+            const QVariant&                 range   = QVariant(),
+            const QString&                  name    = "name",
+            const QString&                  tip     = "tips",
+            const QString&                  remark  = "Notes"
+            ) : YParamBase(type, value, defvalue, range, name, tip, remark){ }
+};
+
+// Locale parameter
+class YLocaleParameter : public YParamBase{
+public:
+    YLocaleParameter() = delete;
+    YLocaleParameter(
+            const YParamEnum::ParamType&    type    = YParamEnum::ParamType_Locale,
+            const QVariant&                 value   = QVariant(),
+            const QVariant&                 defvalue= QVariant(),
+            const QVariant&                 range   = QVariant(),
+            const QString&                  name    = "name",
+            const QString&                  tip     = "tips",
+            const QString&                  remark  = "Notes"
+            ) : YParamBase(type, value, defvalue, range, name, tip, remark){ }
+
+    // YParamBase interface
+public:
+    virtual QDomElement toDom(QDomDocument &doc) override;
+    virtual bool fromDom(QDomElement &dom) override;
+};
+
+// Point parameter
+class YPointParameter : public YParamBase{
+public:
+    YPointParameter() = delete;
+    YPointParameter(
+            const YParamEnum::ParamType&    type    = YParamEnum::ParamType_Point,
+            const QVariant&                 value   = QVariant(),
+            const QVariant&                 defvalue= QVariant(),
+            const QVariant&                 range   = QVariant(),
+            const QString&                  name    = "name",
+            const QString&                  tip     = "tips",
+            const QString&                  remark  = "Notes"
+            ) : YParamBase(type, value, defvalue, range, name, tip, remark){ }
+
+    // YParamBase interface
+public:
+    virtual QDomElement toDom(QDomDocument &doc) override;
+    virtual bool fromDom(QDomElement &dom) override;
+    virtual void setVParamValue(const QVariant &newVParamValue, const QtProperty *property) override;
+};
+
 } // namespace YParamBrowser
 
 

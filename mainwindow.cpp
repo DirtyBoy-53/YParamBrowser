@@ -2,6 +2,9 @@
 #include "ui_mainwindow.h"
 #include <QDebug>
 #include <QVBoxLayout>
+#include <QDate>
+#include <QDateTime>
+#include <QKeySequence>
 
 #include <YParamBase.hpp>
 #include "YParamManager.h"
@@ -72,7 +75,7 @@ using namespace YParamBrowser;
         YParamEnum::ParamType_String,
         QVariant("Hello YParam"),
         QVariant("string"),
-        QVariant("None"),
+        QVariant(),
         "Test3",
         "Test3_Tips"
         );
@@ -81,7 +84,7 @@ using namespace YParamBrowser;
         YParamEnum::ParamType_Double,
         QVariant(3.1415926),
         QVariant(0.0),
-        QVariant("None"),
+        QVariant(),
         "Test4",
         "Test4_Tips"
         );
@@ -90,7 +93,7 @@ using namespace YParamBrowser;
         YParamEnum::ParamType_PassWordStr,
         QVariant(12345678),
         QVariant(1),
-        QVariant("None"),
+        QVariant(),
         "Test5",
         "Test5_Tips"
         );
@@ -108,7 +111,7 @@ using namespace YParamBrowser;
         YParamEnum::ParamType_Bool,
         QVariant(false),
         QVariant(false),
-        QVariant("None"),
+        QVariant(),
         "Test7",
         "Test7_Tips"
         );
@@ -117,7 +120,7 @@ using namespace YParamBrowser;
         YParamEnum::ParamType_File,
         QVariant("D:/file.txt"),
         QVariant("D:/file.txt"),
-        QVariant("None"),
+        QVariant(),
         "Test8",
         "Test8_Tips"
         );
@@ -126,19 +129,66 @@ using namespace YParamBrowser;
         YParamEnum::ParamType_Folder,
         QVariant("D:/"),
         QVariant("D:/"),
-        QVariant("None"),
+        QVariant(),
         "Test9",
         "Test9_Tips"
         );
 
     YParamPtr param10 = YParamFactory::createParameter(
         YParamEnum::ParamType_Date,
-        QVariant("2025-1-11"),
-        QVariant("2025-1-11"),
-        QVariant("None"),
+        QVariant("2025-01-11"),
+        QVariant(QDate::currentDate()),
+        QVariant(),
         "Test10",
         "Test10_Tips"
         );
+
+    YParamPtr param11 = YParamFactory::createParameter(
+        YParamEnum::ParamType_Time,
+        QVariant("15:35:11"),
+        QVariant(QTime::currentTime()),
+        QVariant(),
+        "Test11",
+        "Test11_Tips"
+        );
+
+    YParamPtr param12 = YParamFactory::createParameter(
+        YParamEnum::ParamType_DateTime,
+        QVariant("2025-01-11 15:39:52.768"),
+        QVariant(QDateTime::currentDateTime()),
+        QVariant(),
+        "Test12",
+        "Test12_Tips"
+        );
+
+    YParamPtr param13 = YParamFactory::createParameter(
+        YParamEnum::ParamType_KeySeq,
+        QVariant("Ctrl+Q"),
+        QVariant(QVariant::fromValue(QKeySequence(Qt::ControlModifier | Qt::Key_Q))),
+        QVariant(),
+        "Test13",
+        "Test13_Tips"
+        );
+
+
+    YParamPtr param14 = YParamFactory::createParameter(
+        YParamEnum::ParamType_Locale,
+        QVariant("zh_CN"),
+        QVariant(QLocale(QLocale::Polish, QLocale::Poland)),
+        QVariant(),
+        "Test14",
+        "Test14_Tips"
+        );
+
+    YParamPtr param15 = YParamFactory::createParameter(
+        YParamEnum::ParamType_Point,
+        QVariant(QPoint(1,1)),
+        QVariant(QPoint(2,2)),
+        QVariant(),
+        "Test15",
+        "Test15_Tips"
+        );
+
     manager->addParam(param1, "IntParam");
     manager->addParam(param2, "IntParam");
     manager->addParam(param3, "StringParam");
@@ -149,6 +199,11 @@ using namespace YParamBrowser;
     manager->addParam(param8, "File");
     manager->addParam(param9, "Folder");
     manager->addParam(param10, "Date");
+    manager->addParam(param11, "Time");
+    manager->addParam(param12, "DateTime");
+    manager->addParam(param13, "KeySeq");
+    manager->addParam(param14, "Locale");
+    manager->addParam(param15, "Point");
 
 
     manager->layoutAddParamWidget(layout);

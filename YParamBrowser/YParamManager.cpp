@@ -112,7 +112,7 @@ void traverseAllElements(const QDomNode& node) {
             try {
                 auto paramPtr = YParamFactory::createParameter(element.tagName());
                 paramPtr->fromDom(element);
-                qDebug() << paramPtr.get()->toString();
+//                qDebug() << paramPtr.get()->toString();
             } catch (const YParamBrowserException& e) {
                 qDebug() << QString(e.what());
             }
@@ -267,7 +267,7 @@ bool YParamManager::exportParam(const QString &path)
             paramNode.appendChild(paramEle);
         }
     }
-    qDebug() <<file.fileName() << doc.toString();
+//    qDebug() <<file.fileName() << doc.toString();
     //输出文件
     QTextStream out_stream(&file);
     doc.save(out_stream,4);//缩进4格
@@ -299,7 +299,7 @@ void YParamManager::initConnect()
             const QString& paramKey = innerIt.key();  // 获取参数的键
             const YParamPtr& paramValue = innerIt.value();  // 获取参数的值
             if(paramKey == property->propertyName()){
-                paramValue.get()->setVParamValue(val.toString());
+                paramValue.get()->setVParamValue(val.toString(), property);
             }
         }
     }
@@ -380,7 +380,7 @@ void YParamManager::on_update_ui()
         for (auto innerIt = innerMap.constBegin(); innerIt != innerMap.constEnd(); ++innerIt) {
             const QString& paramKey = innerIt.key();  // 获取参数的键
             const YParamPtr& paramValue = innerIt.value();  // 获取参数的值
-            qDebug() << __func__ << ":" << paramKey << paramValue->toString();
+//            qDebug() << __func__ << ":" << paramKey << paramValue->toString();
             topItem->addSubProperty(getProperty(mVariantManager.get(), paramValue));
         }
 

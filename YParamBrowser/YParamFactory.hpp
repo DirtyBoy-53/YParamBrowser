@@ -51,6 +51,21 @@ public:
             case YParamEnum::ParamType::ParamType_Date:
                 return std::make_shared<YDateParameter>(type, value, defvalue, range, name, tip, remark);
                 break;
+            case YParamEnum::ParamType::ParamType_Time:
+                return std::make_shared<YTimeParameter>(type, value, defvalue, range, name, tip, remark);
+                break;
+            case YParamEnum::ParamType::ParamType_DateTime:
+                return std::make_shared<YDateTimeParameter>(type, value, defvalue, range, name, tip, remark);
+                break;
+            case YParamEnum::ParamType::ParamType_KeySeq:
+                return std::make_shared<YKeySeqParameter>(type, value, defvalue, range, name, tip, remark);
+                break;
+            case YParamEnum::ParamType::ParamType_Locale:
+                return std::make_shared<YLocaleParameter>(type, value, defvalue, range, name, tip, remark);
+                break;
+            case YParamEnum::ParamType::ParamType_Point:
+                return std::make_shared<YPointParameter>(type, value, defvalue, range, name, tip, remark);
+                break;
             default:
                 return nullptr;
         }
@@ -87,6 +102,21 @@ public:
             break;
         case YParamEnum::ParamType::ParamType_Date:
             return std::make_shared<YDateParameter>(type);
+            break;
+        case YParamEnum::ParamType::ParamType_Time:
+            return std::make_shared<YTimeParameter>(type);
+            break;
+        case YParamEnum::ParamType::ParamType_DateTime:
+            return std::make_shared<YDateTimeParameter>(type);
+            break;
+        case YParamEnum::ParamType::ParamType_KeySeq:
+            return std::make_shared<YKeySeqParameter>(type);
+            break;
+        case YParamEnum::ParamType::ParamType_Locale:
+            return std::make_shared<YLocaleParameter>(type);
+            break;
+        case YParamEnum::ParamType::ParamType_Point:
+            return std::make_shared<YPointParameter>(type);
             break;
         default:
             return nullptr;

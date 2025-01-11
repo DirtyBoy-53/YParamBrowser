@@ -1,4 +1,4 @@
-#ifndef YPARAMBASE_HPP
+﻿#ifndef YPARAMBASE_HPP
 #define YPARAMBASE_HPP
 
 #include <QString>
@@ -10,7 +10,7 @@
 #include <QMetaEnum>
 #include <memory>
 #include <QDebug>
-
+#include <QtProperty>
 // 名称：参数基类
 // 描述：所有参数的基类
 
@@ -125,14 +125,11 @@ public:
 
     inline YParamEnum::ParamType    getEParamType() const { return eParamType; }
     inline QString                  getSParamName() const { return sParamName; }
-    inline QVariant                 getVParamValue()const {
-        qDebug() << vParamValue;
-        return vParamValue;
-    }
+    inline QVariant                 getVParamValue()const { return vParamValue; }
     inline QVariant                 getVParamRange()const { return vParamRange; }
     inline QString                  getSParamTip()  const { return sParamTip; }
 
-    virtual void                     setVParamValue(const QVariant &newVParamValue);
+    virtual void                    setVParamValue(const QVariant &newVParamValue, const QtProperty *property=nullptr);
 
     virtual QDomElement     toDom(QDomDocument& doc);
     virtual bool            fromDom(QDomElement& dom);
@@ -155,8 +152,9 @@ protected:
 
 using YParamPtr = std::shared_ptr<YParamBase>;
 
-inline void YParamBase::setVParamValue(const QVariant &newVParamValue)
+inline void YParamBase::setVParamValue(const QVariant &newVParamValue, const QtProperty *property)
 {
+    Q_UNUSED(property)
     vParamValue = newVParamValue;
 }
 
