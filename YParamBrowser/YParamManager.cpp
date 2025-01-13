@@ -222,6 +222,7 @@ bool YParamManager::parseXML(const QString &filePath, YGroupParamMap &group)
             }
         }
     }
+    return true;
 }
 
 bool YParamManager::importParam(const QString &path)
@@ -333,6 +334,7 @@ int getTypeByParamType(YParamEnum::ParamType type){
     case YParamEnum::ParamType_Font         : return QVariant::Font;
     case YParamEnum::ParamType_Color        : return QVariant::Color;
     }
+    return 0;
 }
 
 QtVariantProperty * getProperty(QtVariantPropertyManager *variantManager, YParamPtr param)
@@ -358,6 +360,9 @@ QtVariantProperty * getProperty(QtVariantPropertyManager *variantManager, YParam
     } else if (param.get()->getEParamType() == YParamEnum::ParamType_Enum) {
         item->setAttribute(QLatin1String("enumNames"), param.get()->getVParamRange());
         item->setValue(param.get()->getVParamValue());
+    } else if (param.get()->getEParamType() == YParamEnum::ParamType_Flag) {
+        item->setAttribute(QLatin1String("flagNames"), param.get()->getVParamRange());
+        item->setValue(param.get()->getVParamValue());
     }
 
     return item;
@@ -378,7 +383,7 @@ void YParamManager::on_update_ui()
 
         // 遍历每个组内的参数
         for (auto innerIt = innerMap.constBegin(); innerIt != innerMap.constEnd(); ++innerIt) {
-            const QString& paramKey = innerIt.key();  // 获取参数的键
+//            const QString& paramKey = innerIt.key();  // 获取参数的键
             const YParamPtr& paramValue = innerIt.value();  // 获取参数的值
 //            qDebug() << __func__ << ":" << paramKey << paramValue->toString();
             topItem->addSubProperty(getProperty(mVariantManager.get(), paramValue));
@@ -393,6 +398,11 @@ void YParamManager::on_update_ui()
     mValueChangeSigEnable = true;
 
 
+}
+
+YParamManager::YGroupParamMap YParamManager::groupParamMap() const
+{
+    return mGroupParamMap;
 }
 
 void YParamManager::setSavePath(const QString &newSavePath)

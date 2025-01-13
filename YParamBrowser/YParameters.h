@@ -90,7 +90,6 @@ public:
 
     // YParamBase interface
 public:
-
     QDomElement toDom(QDomDocument &doc);
     bool fromDom(QDomElement &dom);
 };
@@ -243,6 +242,161 @@ public:
     virtual void setVParamValue(const QVariant &newVParamValue, const QtProperty *property) override;
 };
 
+// PointF parameter
+class YPointFParameter : public YParamBase{
+public:
+    YPointFParameter() = delete;
+    YPointFParameter(
+            const YParamEnum::ParamType&    type    = YParamEnum::ParamType_PointF,
+            const QVariant&                 value   = QVariant(),
+            const QVariant&                 defvalue= QVariant(),
+            const QVariant&                 range   = QVariant(),
+            const QString&                  name    = "name",
+            const QString&                  tip     = "tips",
+            const QString&                  remark  = "Notes"
+            ) : YParamBase(type, value, defvalue, range, name, tip, remark){ }
+
+    // YParamBase interface
+public:
+    virtual QDomElement toDom(QDomDocument &doc) override;
+    virtual bool fromDom(QDomElement &dom) override;
+    virtual void setVParamValue(const QVariant &newVParamValue, const QtProperty *property) override;
+};
+
+// Size parameter
+class YSizeParameter : public YParamBase{
+public:
+    YSizeParameter() = delete;
+    YSizeParameter(
+            const YParamEnum::ParamType&    type    = YParamEnum::ParamType_Size,
+            const QVariant&                 value   = QVariant(),
+            const QVariant&                 defvalue= QVariant(),
+            const QVariant&                 range   = QVariant(),
+            const QString&                  name    = "name",
+            const QString&                  tip     = "tips",
+            const QString&                  remark  = "Notes"
+            ) : YParamBase(type, value, defvalue, range, name, tip, remark){ }
+
+    // YParamBase interface
+public:
+    virtual QDomElement toDom(QDomDocument &doc) override;
+    virtual bool fromDom(QDomElement &dom) override;
+    virtual void setVParamValue(const QVariant &newVParamValue, const QtProperty *property) override;
+};
+
+
+// SizeF parameter
+class YSizeFParameter : public YParamBase{
+public:
+    YSizeFParameter() = delete;
+    YSizeFParameter(
+            const YParamEnum::ParamType&    type    = YParamEnum::ParamType_SizeF,
+            const QVariant&                 value   = QVariant(),
+            const QVariant&                 defvalue= QVariant(),
+            const QVariant&                 range   = QVariant(),
+            const QString&                  name    = "name",
+            const QString&                  tip     = "tips",
+            const QString&                  remark  = "Notes"
+            ) : YParamBase(type, value, defvalue, range, name, tip, remark){ }
+
+    // YParamBase interface
+public:
+    virtual QDomElement toDom(QDomDocument &doc) override;
+    virtual bool fromDom(QDomElement &dom) override;
+    virtual void setVParamValue(const QVariant &newVParamValue, const QtProperty *property) override;
+};
+
+// Rect parameter
+class YRectParameter : public YParamBase{
+public:
+    YRectParameter() = delete;
+    YRectParameter(
+            const YParamEnum::ParamType&    type    = YParamEnum::ParamType_Rect,
+            const QVariant&                 value   = QVariant(),
+            const QVariant&                 defvalue= QVariant(),
+            const QVariant&                 range   = QVariant(),
+            const QString&                  name    = "name",
+            const QString&                  tip     = "tips",
+            const QString&                  remark  = "Notes"
+            ) : YParamBase(type, value, defvalue, range, name, tip, remark){ }
+
+    // YParamBase interface
+public:
+    virtual QDomElement toDom(QDomDocument &doc) override;
+    virtual bool fromDom(QDomElement &dom) override;
+    virtual void setVParamValue(const QVariant &newVParamValue, const QtProperty *property) override;
+};
+
+// RectF parameter
+class YRectFParameter : public YParamBase{
+public:
+    YRectFParameter() = delete;
+    YRectFParameter(
+            const YParamEnum::ParamType&    type    = YParamEnum::ParamType_RectF,
+            const QVariant&                 value   = QVariant(),
+            const QVariant&                 defvalue= QVariant(),
+            const QVariant&                 range   = QVariant(),
+            const QString&                  name    = "name",
+            const QString&                  tip     = "tips",
+            const QString&                  remark  = "Notes"
+            ) : YParamBase(type, value, defvalue, range, name, tip, remark){ }
+
+    // YParamBase interface
+public:
+    virtual QDomElement toDom(QDomDocument &doc) override;
+    virtual bool fromDom(QDomElement &dom) override;
+    virtual void setVParamValue(const QVariant &newVParamValue, const QtProperty *property) override;
+};
+
+// Flag parameter
+class YFlagParameter : public YParamBase{
+public:
+    YFlagParameter() = delete;
+    YFlagParameter(
+            const YParamEnum::ParamType&    type    = YParamEnum::ParamType_Flag,
+            const QVariant&                 value   = QVariant(),
+            const QVariant&                 defvalue= QVariant(),
+            const QVariant&                 range   = QVariant(),
+            const QString&                  name    = "name",
+            const QString&                  tip     = "tips",
+            const QString&                  remark  = "Notes"
+            ) : YParamBase(type, value, defvalue, range, name, tip, remark){ }
+
+    // YParamBase interface
+public:
+    virtual QDomElement toDom(QDomDocument &doc) override;
+    virtual bool fromDom(QDomElement &dom) override;
+};
+
+// Font parameter
+class YFontParameter : public YParamBase{
+public:
+    YFontParameter() = delete;
+    YFontParameter(
+            const YParamEnum::ParamType&    type    = YParamEnum::ParamType_Font,
+            const QVariant&                 value   = QVariant(),
+            const QVariant&                 defvalue= QVariant(),
+            const QVariant&                 range   = QVariant(),
+            const QString&                  name    = "name",
+            const QString&                  tip     = "tips",
+            const QString&                  remark  = "Notes"
+            ) : YParamBase(type, value, defvalue, range, name, tip, remark){ }
+};
+
+// Color parameter
+class YColorParameter : public YParamBase{
+public:
+    YColorParameter() = delete;
+    YColorParameter(
+            const YParamEnum::ParamType&    type    = YParamEnum::ParamType_Color,
+            const QVariant&                 value   = QVariant(),
+            const QVariant&                 defvalue= QVariant(),
+            const QVariant&                 range   = QVariant(),
+            const QString&                  name    = "name",
+            const QString&                  tip     = "tips",
+            const QString&                  remark  = "Notes"
+            ) : YParamBase(type, value, defvalue, range, name, tip, remark){ }
+};
 } // namespace YParamBrowser
 
 

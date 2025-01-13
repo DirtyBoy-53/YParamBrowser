@@ -194,7 +194,7 @@ bool YLocaleParameter::fromDom(QDomElement &dom)
 QDomElement YPointParameter::toDom(QDomDocument &doc)
 {
     auto param = YParamBase::toDom(doc);
-    QPoint value = vParamValue.toPoint();
+    auto value = vParamValue.toPoint();
     qDebug() << value;
     param.setAttribute("Value", QString("(%1,%2)").arg(value.x()).arg(value.y()));
 
@@ -235,9 +235,370 @@ bool YPointParameter::fromDom(QDomElement &dom)
 
 void YPointParameter::setVParamValue(const QVariant &newVParamValue, const QtProperty *property)
 {
+    Q_UNUSED(newVParamValue)
     auto value = property->valueText();
     if (value.isEmpty()) return;
     int x,y;
     sscanf(value.toStdString().c_str(), "(%d,%d)", &x, &y);
     vParamValue = QVariant(QPoint(x,y));
 }
+
+
+/********************浮点数点类型***********************
+ * YPointFParameter
+ * 描述：浮点数点类型参数类型
+ *
+ */
+QDomElement YPointFParameter::toDom(QDomDocument &doc)
+{
+    auto param = YParamBase::toDom(doc);
+    auto value = vParamValue.toPointF();
+    qDebug() << value;
+    param.setAttribute("Value", QString("(%1,%2)").arg(QString::number(value.x(), 'g'))
+                       .arg(QString::number(value.y(), 'g')));
+
+    QDomNode ele = param.firstChildElement("Default");
+    if (!ele.isNull()) {
+        param.removeChild(ele);
+    }
+
+    QDomElement element = doc.createElement("Default");
+    auto def = vParamDefault.toPointF();
+    QDomText txtDom = doc.createTextNode(QString("(%1,%2)").arg(QString::number(def.x(), 'g'))
+                                         .arg(QString::number(def.y(), 'g')));
+    param.appendChild(element);
+    element.appendChild(txtDom);
+
+    return param;
+}
+
+bool YPointFParameter::fromDom(QDomElement &dom)
+{
+    auto ret = YParamBase::fromDom(dom);
+
+    qreal x,y;
+    QString value = dom.attribute("Value");
+    sscanf(value.toStdString().c_str(), "(%lf,%lf)", &x, &y);
+    vParamValue = QVariant(QPointF(x,y));
+
+    qreal x1,y1;
+    QDomElement ele = dom.firstChildElement("Default");
+    if (!ele.isNull()) {
+        QString def = ele.text();
+        sscanf(def.toStdString().c_str(), "(%lf,%lf)", &x1, &y1);
+        vParamDefault = QVariant(QPointF(x1,y1));
+    } else {
+
+    }
+    return ret;
+
+}
+
+void YPointFParameter::setVParamValue(const QVariant &newVParamValue, const QtProperty *property)
+{
+    Q_UNUSED(newVParamValue)
+    auto value = property->valueText();
+    if (value.isEmpty()) return;
+    qreal x,y;
+    sscanf(value.toStdString().c_str(), "(%lf,%lf)", &x, &y);
+    vParamValue = QVariant(QPointF(x,y));
+}
+
+/********************尺寸类型***********************
+ * YSizeParameter
+ * 描述：尺寸类型参数类型
+ *
+ */
+
+QDomElement YSizeParameter::toDom(QDomDocument &doc)
+{
+    auto param = YParamBase::toDom(doc);
+    auto value = vParamValue.toSize();
+    qDebug() << value;
+    param.setAttribute("Value", QString("(%1x%2)").arg(value.width()).arg(value.height()));
+
+    QDomNode ele = param.firstChildElement("Default");
+    if (!ele.isNull()) {
+        param.removeChild(ele);
+    }
+
+    QDomElement element = doc.createElement("Default");
+    auto def = vParamDefault.toSize();
+    QDomText txtDom = doc.createTextNode(QString("(%1x%2)").arg(def.width()).arg(def.height()));
+    param.appendChild(element);
+    element.appendChild(txtDom);
+
+    return param;
+}
+
+bool YSizeParameter::fromDom(QDomElement &dom)
+{
+    auto ret = YParamBase::fromDom(dom);
+
+    int x,y;
+    QString value = dom.attribute("Value");
+    sscanf(value.toStdString().c_str(), "(%dx%d)", &x, &y);
+    vParamValue = QVariant(QSize(x,y));
+
+    int x1,y1;
+    QDomElement ele = dom.firstChildElement("Default");
+    if (!ele.isNull()) {
+        QString def = ele.text();
+        sscanf(def.toStdString().c_str(), "(%dx%d)", &x1, &y1);
+        vParamDefault = QVariant(QSize(x1,y1));
+    } else {
+
+    }
+    return ret;
+}
+
+void YSizeParameter::setVParamValue(const QVariant &newVParamValue, const QtProperty *property)
+{
+    Q_UNUSED(newVParamValue)
+    auto value = property->valueText();
+    if (value.isEmpty()) return;
+    int x,y;
+    sscanf(value.toStdString().c_str(), "%d x %d", &x, &y);
+    vParamValue = QVariant(QSize(x,y));
+}
+
+/********************浮点数尺寸类型***********************
+ * YSizeFParameter
+ * 描述：浮点数尺寸类型参数类型
+ *
+ */
+QDomElement YSizeFParameter::toDom(QDomDocument &doc)
+{
+    auto param = YParamBase::toDom(doc);
+    auto value = vParamValue.toSizeF();
+    qDebug() << value;
+    param.setAttribute("Value", QString("(%1x%2)").arg(QString::number(value.width(), 'g'))
+                       .arg(QString::number(value.height(), 'g')));
+
+    QDomNode ele = param.firstChildElement("Default");
+    if (!ele.isNull()) {
+        param.removeChild(ele);
+    }
+
+    QDomElement element = doc.createElement("Default");
+    auto def = vParamDefault.toSizeF();
+    QDomText txtDom = doc.createTextNode(QString("(%1x%2)").arg(QString::number(def.width(), 'g'))
+                                         .arg(QString::number(def.height(), 'g')));
+    param.appendChild(element);
+    element.appendChild(txtDom);
+
+    return param;
+}
+
+bool YSizeFParameter::fromDom(QDomElement &dom)
+{
+    auto ret = YParamBase::fromDom(dom);
+
+    qreal x,y;
+    QString value = dom.attribute("Value");
+    sscanf(value.toStdString().c_str(), "(%lfx%lf)", &x, &y);
+    vParamValue = QVariant(QSizeF(x,y));
+
+    qreal x1,y1;
+    QDomElement ele = dom.firstChildElement("Default");
+    if (!ele.isNull()) {
+        QString def = ele.text();
+        sscanf(def.toStdString().c_str(), "(%lfx%lf)", &x1, &y1);
+        vParamDefault = QVariant(QSizeF(x1,y1));
+    } else {
+
+    }
+    return ret;
+}
+
+void YSizeFParameter::setVParamValue(const QVariant &newVParamValue, const QtProperty *property)
+{
+    Q_UNUSED(newVParamValue)
+    auto value = property->valueText();
+    if (value.isEmpty()) return;
+    qreal x,y;
+    sscanf(value.toStdString().c_str(), "%lf x %lf", &x, &y);
+    vParamValue = QVariant(QSizeF(x,y));
+}
+
+
+/********************矩形类型***********************
+ * YRectParameter
+ * 描述：矩形类型参数类型
+ *
+ */
+QDomElement YRectParameter::toDom(QDomDocument &doc)
+{
+    auto param = YParamBase::toDom(doc);
+    auto value = vParamValue.toRect();
+    qDebug() << value;
+    param.setAttribute("Value", QString("[(%1,%2),%3x%4]").arg(value.x()).arg(value.y())
+                       .arg(value.width()).arg(value.height()));
+
+    QDomNode ele = param.firstChildElement("Default");
+    if (!ele.isNull()) {
+        param.removeChild(ele);
+    }
+
+    QDomElement element = doc.createElement("Default");
+    auto def = vParamDefault.toRect();
+    QDomText txtDom = doc.createTextNode(QString("[(%1,%2),%3x%4]").arg(def.x()).arg(def.y())
+                                         .arg(def.width()).arg(def.height()));
+    param.appendChild(element);
+    element.appendChild(txtDom);
+
+    return param;
+}
+
+bool YRectParameter::fromDom(QDomElement &dom)
+{
+    auto ret = YParamBase::fromDom(dom);
+
+    int x,y,w,h;
+    QString value = dom.attribute("Value");
+    sscanf(value.toStdString().c_str(), "[(%d,%d),%dx%d]", &x, &y, &w, &h);
+    vParamValue = QVariant(QRect(x,y,w,h));
+
+    int x1,y1,w1,h1;
+    QDomElement ele = dom.firstChildElement("Default");
+    if (!ele.isNull()) {
+        QString def = ele.text();
+        sscanf(def.toStdString().c_str(), "[(%d,%d),%dx%d]", &x1, &y1, &w1, &h1);
+        vParamDefault = QVariant(QRect(x1,y1,w1,h1));
+    } else {
+
+    }
+    return ret;
+}
+
+void YRectParameter::setVParamValue(const QVariant &newVParamValue, const QtProperty *property)
+{
+    Q_UNUSED(newVParamValue)
+    auto value = property->valueText();
+    if (value.isEmpty()) return;
+    int x,y,w,h;
+    sscanf(value.toStdString().c_str(), "[(%d, %d), %d x %d]", &x, &y, &w, &h);
+    vParamValue = QVariant(QRect(x,y,w,h));
+}
+
+/********************浮点数矩形类型***********************
+ * YRectFParameter
+ * 描述：浮点数矩形类型参数类型
+ *
+ */
+QDomElement YRectFParameter::toDom(QDomDocument &doc)
+{
+    auto param = YParamBase::toDom(doc);
+    auto value = vParamValue.toRectF();
+    qDebug() << value;
+    param.setAttribute("Value", QString("[(%1,%2),%3x%4]").arg(QString::number(value.x(),'g')).arg(QString::number(value.y(), 'g'))
+                       .arg(QString::number(value.width(),'g')).arg(QString::number(value.height(), 'g')));
+
+    QDomNode ele = param.firstChildElement("Default");
+    if (!ele.isNull()) {
+        param.removeChild(ele);
+    }
+
+    QDomElement element = doc.createElement("Default");
+    auto def = vParamDefault.toRectF();
+    QDomText txtDom = doc.createTextNode(QString("[(%1,%2),%3x%4]").arg(QString::number(def.x(),'g')).arg(QString::number(def.y(), 'g'))
+                                         .arg(QString::number(def.width(),'g')).arg(QString::number(def.height(), 'g')));
+    param.appendChild(element);
+    element.appendChild(txtDom);
+
+    return param;
+}
+
+bool YRectFParameter::fromDom(QDomElement &dom)
+{
+    auto ret = YParamBase::fromDom(dom);
+
+    qreal x,y,w,h;
+    QString value = dom.attribute("Value");
+    sscanf(value.toStdString().c_str(), "[(%lf,%lf),%lfx%lf]", &x, &y, &w, &h);
+    vParamValue = QVariant(QRectF(x,y,w,h));
+
+    qreal x1,y1,w1,h1;
+    QDomElement ele = dom.firstChildElement("Default");
+    if (!ele.isNull()) {
+        QString def = ele.text();
+        sscanf(def.toStdString().c_str(), "[(%lf,%lf),%lfx%lf]", &x1, &y1, &w1, &h1);
+        vParamDefault = QVariant(QRectF(x1,y1,w1,h1));
+    } else {
+
+    }
+    return ret;
+}
+
+void YRectFParameter::setVParamValue(const QVariant &newVParamValue, const QtProperty *property)
+{
+    Q_UNUSED(newVParamValue)
+    auto value = property->valueText();
+    if (value.isEmpty()) return;
+    qreal x,y,w,h;
+    sscanf(value.toStdString().c_str(), "[(%lf, %lf), %lf x %lf]", &x, &y, &w, &h);
+    vParamValue = QVariant(QRectF(x,y,w,h));
+}
+
+/********************标记类型***********************
+ * YFlagParameter
+ * 描述：标记类型参数类型
+ *
+ */
+QDomElement YFlagParameter::toDom(QDomDocument &doc)
+{
+    auto param = YParamBase::toDom(doc);
+    QDomNode eleRange1 = param.firstChildElement("Range");
+    if (!eleRange1.isNull()) {
+        param.removeChild(eleRange1);
+    }
+
+    QDomElement eleRange = doc.createElement("Range");
+    auto rangePair = vParamRange.toStringList();
+    QDomText txtRange = doc.createTextNode(rangePair.join(','));
+    param.appendChild(eleRange);
+    eleRange.appendChild(txtRange);
+
+    printParam(param);
+    return param;
+}
+
+
+bool YFlagParameter::fromDom(QDomElement &dom)
+{
+    auto ret = YParamBase::fromDom(dom);
+
+    QDomElement eleRange = dom.firstChildElement("Range");
+    if (!eleRange.isNull()) {
+        QString rangeText = eleRange.text();
+        QStringList rangeParts = rangeText.split(",");
+        if (rangeParts.size() > 1) {
+            vParamRange = QVariant(rangeParts);
+        } else {
+            throw YParamBrowserException(QString("Failed to read 'Range' information:%1").arg(rangeText).toStdString());
+        }
+    } else {
+
+    }
+    return ret;
+}
+
+/********************标记类型***********************
+ * YFlagParameter
+ * 描述：标记类型参数类型
+ *
+ */
+//QDomElement YFontParameter::toDom(QDomDocument &doc)
+//{
+
+//}
+
+//bool YFontParameter::fromDom(QDomElement &dom)
+//{
+
+//}
+
+//void YFontParameter::setVParamValue(const QVariant &newVParamValue, const QtProperty *property)
+//{
+
+//}

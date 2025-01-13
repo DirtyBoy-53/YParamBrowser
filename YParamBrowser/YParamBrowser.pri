@@ -13,3 +13,6 @@ SOURCES += \
     $$PWD/YParamManager.cpp \
     $$PWD/YParamXmlHandle.cpp \
     $$PWD/YParameters.cpp
+
+DISTFILES += \
+    $$PWD/ReadMe.md

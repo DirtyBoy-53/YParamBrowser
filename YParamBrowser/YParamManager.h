@@ -1,4 +1,4 @@
-#ifndef YPARAMMANAGER_H
+﻿#ifndef YPARAMMANAGER_H
 #define YPARAMMANAGER_H
 
 #include "YParamBase.hpp"
@@ -40,6 +40,8 @@ public:
     bool exportParam(const QString &path);
 
     void setSavePath(const QString &newSavePath);
+
+    YGroupParamMap groupParamMap() const;
 
 private:
     void initConnect();

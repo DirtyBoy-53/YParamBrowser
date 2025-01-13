@@ -1,55 +1,43 @@
-﻿#include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include <QDebug>
-#include <QVBoxLayout>
-#include <QDate>
-#include <QDateTime>
-#include <QKeySequence>
+﻿# YParamBrowser 项目说明文档
 
-#include <YParamBase.hpp>
-#include "YParamManager.h"
-#include "YParamFactory.hpp"
+## 概述
+YParamBrowser 是一个基于 Qt 框架的参数浏览器，旨在提供一个简单易用的界面来管理和查看各种类型的参数。该项目支持多种数据类型，包括整数、字符串、浮点数、布尔值、文件路径、文件夹路径、日期、时间、日期时间、快捷键序列、区域设置、点、浮点点、大小、浮点大小、矩形、浮点矩形、标志、字体和颜色。
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
-{
-    ui->setupUi(this);
-using namespace YParamBrowser;
-#if 0
-    QVariant va =  QVariant::fromValue(QPair<int,int>(10,100));
-    auto rangePair = va.value<QPair<int,int>>();
-    qDebug() << QString("%1~%2").arg(rangePair.first).arg(rangePair.second);
+## 前置条件
+- 确保您的开发环境中已安装 Qt 框架。
+- 项目使用 C++ 编写，因此需要 C++ 编译器。
 
-    QMetaEnum metaEnum = QMetaEnum::fromType<YParamEnum::ParamType>();
+## 运行方法
+1. 克隆或下载项目到本地。
+2. 打开终端或命令提示符，导航到项目目录。
+3. 运行构建命令（例如，对于 Qt 项目，可以使用 `qmake` 和 `make`）。
+4. 执行生成的可执行文件。
 
-    qDebug() << metaEnum.valueToKey(YParamEnum::ParamType_Bool) <<  QString(metaEnum.valueToKey(100)).isEmpty();
+## 构建方法
+1. 确保已安装 Qt 开发环境。
+2. 在项目根目录下，运行 `qmake` 生成 Makefile。
+3. 使用 `make` 命令编译项目。
+4. 编译成功后，在 `build` 目录中找到生成的可执行文件。
 
-    using baseType = QMap<QString, int>;
-    QMap<QString, baseType> testType;
-    baseType t1;
-    t1["1"] = 1;
-    t1["2"] = 2;
-    t1["3"] = 3;
+## 许可证
+本项目遵循 MIT 许可证。请查看项目中的 LICENSE 文件了解更多信息。
 
-    baseType t2;
-    t1["11"] = 11;
-    t1["22"] = 22;
-    t1["33"] = 33;
+## 注意事项
+- 请确保在使用本项目时遵守所有相关的法律法规。
+- 本项目中的代码示例仅供参考，实际使用时请根据具体需求进行调整。
 
-    testType["t1"] = t1;
-    testType["t2"] = t2;
-    int value;
-    auto name = "11";
-    for (auto outerIt = testType.constBegin(); outerIt != testType.constEnd(); ++outerIt) {
-        const auto& innerMap = outerIt.value();
-        if (innerMap.contains(name)) {
-            value = innerMap.value(name);
-            qDebug() << "Found key '11' with value:" << value;
-            break;
-        }
-    }
-#endif
+## 贡献
+如果您有任何改进意见或想要贡献代码，请随时提交 Pull Request 或创建 Issue。
+
+## 联系方式
+如有任何问题或建议，请通过项目的 Issue 跟踪系统或联系项目的维护者。
+
+---
+
+请注意，本 README 文件是基于提供的项目代码和假设的项目结构生成的。在实际项目中，可能需要根据项目的具体情况进行调整。
+
+```C++
+    using namespace YParamBrowser;
     YParamManager *manager = new YParamManager();
 
     QVBoxLayout *layout = new QVBoxLayout(centralWidget());
@@ -288,9 +276,3 @@ using namespace YParamBrowser;
 
     manager->layoutAddParamWidget(layout);
     manager->on_update_ui();
-}
-
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
